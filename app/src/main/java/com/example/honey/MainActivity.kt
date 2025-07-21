@@ -26,6 +26,10 @@ import com.example.honey.sampleHoneyOffers
 import com.honey.feature.order.PreOrderScreen
 import com.honey.feature.order.DeliveryMethod
 import androidx.compose.runtime.mutableStateListOf
+import com.honey.feature.auth.SignInScreen
+import com.honey.feature.auth.SignUpScreen
+import com.honey.feature.profile.UserProfileScreen
+import com.honey.feature.profile.EditProfileScreen
 
 class MainActivity : ComponentActivity() {
     private val favoriteIds = mutableStateListOf<String>()
@@ -59,8 +63,23 @@ fun AppNavigation(navController: NavHostController, favoriteIds: MutableList<Str
                         launchSingleTop = true
                     }
                 },
-                onSignIn = { /* TODO: Navigate to sign in */ },
-                onSignUp = { /* TODO: Navigate to sign up */ }
+                onSignIn = { navController.navigate("signin") },
+                onSignUp = { navController.navigate("signup") }
+            )
+        }
+        composable("signin") {
+            SignInScreen(
+                onBack = { navController.popBackStack() },
+                onSubmit = { email, password -> /* TODO: Handle sign in */ },
+                onForgotPassword = { /* TODO: Handle forgot password */ },
+                onSignUp = { navController.navigate("signup") }
+            )
+        }
+        composable("signup") {
+            SignUpScreen(
+                onBack = { navController.popBackStack() },
+                onSubmit = { name, email, password -> /* TODO: Handle sign up */ },
+                onSignIn = { navController.navigate("signin") }
             )
         }
         composable("home") {
@@ -70,7 +89,30 @@ fun AppNavigation(navController: NavHostController, favoriteIds: MutableList<Str
                     navController.navigate("offerDetail/${offer.id}")
                 },
                 onFilterClick = { /* TODO: Navigate to filter screen */ },
-                onFavoritesClick = { /* TODO: Navigate to favorites */ }
+                onFavoritesClick = { /* TODO: Navigate to favorites */ },
+                onProfileClick = { navController.navigate("profile") }
+            )
+        }
+        composable("profile") {
+            UserProfileScreen(
+                username = "Jane Doe",
+                email = "jane@example.com",
+                isDarkMode = false,
+                currentLanguage = "EN",
+                notificationsEnabled = true,
+                onToggleDarkMode = { /* TODO: Toggle dark mode */ },
+                onChangeLanguage = { /* TODO: Change language */ },
+                onToggleNotifications = { /* TODO: Toggle notifications */ },
+                onEditProfile = { navController.navigate("editProfile") },
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable("editProfile") {
+            EditProfileScreen(
+                currentName = "Jane Doe",
+                currentBio = "Organic beekeeper in Bavaria",
+                onBack = { navController.popBackStack() },
+                onSubmit = { newName, newBio -> navController.popBackStack() }
             )
         }
         composable(

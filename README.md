@@ -9,7 +9,7 @@ A modern Android application built with Jetpack Compose that connects users with
 - **Local Discovery**: Find honey and beekeepers in your area
 - **Order Management**: Place and track honey orders
 - **Beekeeper Profiles**: Connect directly with local beekeepers
-- **User Profiles**: Manage your account and preferences
+- **User Profiles**: Manage your account and preferences (no profile picture/avatar)
 - **Offer Details**: Tap any honey offer to see full details and pre-order
 - **Pre-Order Flow**: Specify quantity, delivery method, and comment for pre-ordering honey
 
@@ -104,6 +104,7 @@ StartScreen
 - **Custom Typography**: Optimized for readability
 - **Responsive Layout**: Adapts to different screen sizes
 - **Accessibility**: WCAG compliant design
+- **No profile avatar**: Profile and edit profile screens do not use profile pictures or avatars
 
 ## 📦 Dependencies
 
