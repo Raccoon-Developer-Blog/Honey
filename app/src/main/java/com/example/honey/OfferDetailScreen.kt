@@ -70,7 +70,7 @@ fun OfferDetailScreen(
                     onClick = { onPreOrder(offer.id) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(56.dp)
+                        .height(72.dp)
                         .padding(16.dp),
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFA6D785))
