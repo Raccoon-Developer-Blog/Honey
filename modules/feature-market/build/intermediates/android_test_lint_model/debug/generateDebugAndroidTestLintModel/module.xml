@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="C:\Users\1\AndroidStudioProjects\honey\modules\feature-market"
+    name=":modules:feature-market"
+    type="LIBRARY"
+    maven="honey.modules:feature-market:unspecified"
+    agpVersion="8.4.0"
+    buildFolder="build"
+    bootClassPath="C:\Users\1\AppData\Local\Android\Sdk\platforms\android-34\android.jar;C:\Users\1\AppData\Local\Android\Sdk\build-tools\34.0.0\core-lambda-stubs.jar"
+    javaSourceLevel="11"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="debug"/>
+</lint-module>

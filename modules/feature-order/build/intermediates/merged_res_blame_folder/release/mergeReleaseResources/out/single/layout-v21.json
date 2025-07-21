@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "com.honey.feature.order.feature-order-release-46:/layout-v21/notification_template_icon_group.xml",
+        "source": "com.honey.feature.order.feature-order-core-1.12.0-31:/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "com.honey.feature.order.feature-order-release-46:/layout-v21/notification_template_custom_big.xml",
+        "source": "com.honey.feature.order.feature-order-core-1.12.0-31:/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "com.honey.feature.order.feature-order-release-46:/layout-v21/notification_action.xml",
+        "source": "com.honey.feature.order.feature-order-core-1.12.0-31:/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "com.honey.feature.order.feature-order-release-46:/layout-v21/notification_action_tombstone.xml",
+        "source": "com.honey.feature.order.feature-order-core-1.12.0-31:/layout-v21/notification_action_tombstone.xml"
+    }
+]
