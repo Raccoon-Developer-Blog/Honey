@@ -1,4 +1,4 @@
-package com.honey
+package com.example.honey
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,18 +7,29 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.honey.core.ui.theme.HoneyTheme
 import com.honey.feature.start.StartScreen
-import com.honey.feature.market.HomeScreen
-import com.honey.feature.market.SampleData
+import com.example.honey.HomeScreen
+import com.example.honey.OfferDetailScreen
+import com.example.honey.OfferDetail
+import com.example.honey.sampleHoneyOffers
+import com.honey.feature.order.PreOrderScreen
+import com.honey.feature.order.DeliveryMethod
+import androidx.compose.runtime.mutableStateListOf
 
 class MainActivity : ComponentActivity() {
+    private val favoriteIds = mutableStateListOf<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -26,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
                     Box(modifier = Modifier.padding(innerPadding)) {
-                        AppNavigation(navController = navController)
+                        AppNavigation(navController = navController, favoriteIds = favoriteIds)
                     }
                 }
             }
@@ -35,29 +46,84 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun AppNavigation(navController: NavHostController, favoriteIds: MutableList<String>) {
     NavHost(
         navController = navController,
         startDestination = "start"
     ) {
         composable("start") {
             StartScreen(
-                onExploreGuest = { navController.navigate("home") },
+                onExploreGuest = {
+                    navController.navigate("home") {
+                        popUpTo("start") { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
                 onSignIn = { /* TODO: Navigate to sign in */ },
                 onSignUp = { /* TODO: Navigate to sign up */ }
             )
         }
         composable("home") {
             HomeScreen(
-                offers = SampleData.honeyOffers,
-                onOfferClick = { _ -> 
-                    /* TODO: Navigate to offer details */
+                offers = sampleHoneyOffers,
+                onOfferClick = { offer ->
+                    navController.navigate("offerDetail/${offer.id}")
                 },
-                onFilterClick = { 
-                    /* TODO: Navigate to filter screen */
-                },
-                onFavoritesClick = { 
-                    /* TODO: Navigate to favorites */
+                onFilterClick = { /* TODO: Navigate to filter screen */ },
+                onFavoritesClick = { /* TODO: Navigate to favorites */ }
+            )
+        }
+        composable(
+            route = "offerDetail/{offerId}",
+            arguments = listOf(navArgument("offerId") { type = NavType.StringType })
+        ) { backStack ->
+            val id = backStack.arguments?.getString("offerId")!!
+            val offer = sampleHoneyOffers.find { it.id == id }?.let {
+                OfferDetail(
+                    id = it.id,
+                    producerName = it.producerName,
+                    honeyType = it.honeyType,
+                    pricePerKg = "20", // Demo value
+                    availableKg = "10",    // Demo value
+                    description = "Delicious local honey from ${it.producerName}.",
+                    isFavorite = favoriteIds.contains(it.id)
+                )
+            }
+            if (offer != null) {
+                OfferDetailScreen(
+                    offer = offer,
+                    onBack = { navController.popBackStack() },
+                    onPreOrder = { offerId ->
+                        navController.navigate("preOrder/${offer.id}/${offer.pricePerKg}/${offer.availableKg}")
+                    },
+                    onToggleFavorite = { offerId ->
+                        if (favoriteIds.contains(offerId)) favoriteIds.remove(offerId)
+                        else favoriteIds.add(offerId)
+                    }
+                )
+            } else {
+                Text("Offer not found", color = Color.Red)
+            }
+        }
+        composable(
+            route = "preOrder/{offerId}/{pricePerKg}/{availableKg}",
+            arguments = listOf(
+                navArgument("offerId") { type = NavType.StringType },
+                navArgument("pricePerKg") { type = NavType.StringType },
+                navArgument("availableKg") { type = NavType.StringType }
+            )
+        ) { backStack ->
+            val offerId = backStack.arguments?.getString("offerId")!!
+            val pricePerKg = backStack.arguments?.getString("pricePerKg")!!
+            val availableKg = backStack.arguments?.getString("availableKg")!!
+            PreOrderScreen(
+                offerId = offerId,
+                pricePerKg = pricePerKg,
+                availableKg = availableKg,
+                onBack = { navController.popBackStack() },
+                onConfirmOrder = { id, qty, method, comment ->
+                    // TODO: Handle order confirmation
+                    navController.popBackStack()
                 }
             )
         }

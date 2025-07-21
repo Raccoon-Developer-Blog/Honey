@@ -1,4 +1,4 @@
-package com.honey.feature.market
+package com.example.honey
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,19 +17,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.honey.core.ui.theme.HoneyTheme
 
-// Data model for a single honey offer
+/**
+ * Data model representing a single honey offer.
+ */
 data class HoneyOffer(
     val id: String,
-    val beekeeper: String,
-    val type: String,
+    val producerName: String,
+    val honeyType: String,
     val distance: String
 )
 
-// Two tabs: Map and List
-enum class HomeTab(val title: String) { 
-    Map("Map"), 
-    List("List") 
-}
+/**
+ * Two tabs for the Home screen: Map view and List view.
+ */
+enum class HomeTab(val title: String) { Map("Map"), List("List") }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,32 +45,32 @@ fun HomeScreen(
 
         Scaffold(
             floatingActionButton = {
-                // Floating Action Button opens filter screen
+                // FAB to open the filter screen
                 FloatingActionButton(onClick = onFilterClick) {
-                    Icon(Icons.Default.Search, contentDescription = "Search")
+                    Icon(Icons.Filled.Search, contentDescription = "Open filters")
                 }
             },
             bottomBar = {
-                BottomAppBar { 
+                BottomAppBar {
                     Spacer(Modifier.weight(1f))
-                    // Button to navigate to favorites
+                    // Button to navigate to Favorites screen
                     IconButton(onClick = onFavoritesClick) {
                         Icon(
                             Icons.Default.Favorite,
-                            contentDescription = "Favorites",
+                            contentDescription = "Go to favorites",
                             tint = Color(0xFF7A5F35)
                         )
                     }
                 }
             }
-        ) { paddingValues ->
+        ) { padding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
+                    .padding(padding)
                     .background(Color(0xFFFDF5F5))
             ) {
-                // Tab row for Map and List views
+                // Tab row switching between map and list
                 TabRow(
                     selectedTabIndex = selectedTab.ordinal,
                     containerColor = Color(0xFFFDF5F5),
@@ -84,25 +85,22 @@ fun HomeScreen(
                     }
                 }
 
-                // Display content based on selected tab
+                // Show content based on current tab
                 when (selectedTab) {
                     HomeTab.Map -> {
-                        // Placeholder for the map
+                        // Placeholder for a map composable
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(16.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text("Map Placeholder", color = Color.Gray)
+                            Text("Map view placeholder", color = Color.Gray)
                         }
                     }
                     HomeTab.List -> {
-                        // List of honey offers
-                        OfferList(
-                            offers = offers,
-                            onOfferClick = onOfferClick
-                        )
+                        // Lazy list of honey offers
+                        OfferList(offers = offers, onOfferClick = onOfferClick)
                     }
                 }
             }
@@ -116,9 +114,9 @@ private fun OfferList(
     onOfferClick: (HoneyOffer) -> Unit
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier.fillMaxSize()
     ) {
         items(offers, key = { it.id }) { offer ->
             Card(
@@ -130,13 +128,13 @@ private fun OfferList(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = offer.beekeeper,
+                        text = offer.producerName,
                         fontSize = 18.sp,
                         color = Color(0xFF7A5F35)
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = offer.type,
+                        text = offer.honeyType,
                         fontSize = 14.sp,
                         color = Color.Gray
                     )

@@ -1,9 +1,9 @@
 <libraries>
   <library
       name=":@@:modules:feature-market::debug"
-      jars="C:\Users\1\.gradle\caches\9.0-milestone-1\transforms\266fb3fa2a324a0c068ef7ff425ffaec\transformed\out\jars\classes.jar;C:\Users\1\.gradle\caches\9.0-milestone-1\transforms\266fb3fa2a324a0c068ef7ff425ffaec\transformed\out\jars\libs\R.jar"
+      jars="C:\Users\1\.gradle\caches\9.0-milestone-1\transforms\8a257e917489e432d7e309e255a75a7c\transformed\out\jars\classes.jar;C:\Users\1\.gradle\caches\9.0-milestone-1\transforms\8a257e917489e432d7e309e255a75a7c\transformed\out\jars\libs\R.jar"
       resolved="honey.modules:feature-market:unspecified"
-      folder="C:\Users\1\.gradle\caches\9.0-milestone-1\transforms\266fb3fa2a324a0c068ef7ff425ffaec\transformed\out"
+      folder="C:\Users\1\.gradle\caches\9.0-milestone-1\transforms\8a257e917489e432d7e309e255a75a7c\transformed\out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
